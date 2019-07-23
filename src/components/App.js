@@ -1,9 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import PostList from './PostList';
+import { connect } from "react-redux";
 
-const App = () => {
+import { fetchData } from '../actions';
+
+const App = ({ fetchData, posts }) => {
+
+    useEffect(() => {
+        fetchData();
+        console.log(posts);
+    }, [])
+
     return (
-        <div>Hello</div>
+        <div>
+            <PostList posts={posts} />
+        </div>
     );
 }
 
-export default App;
+const mapStateToProps = ({ posts }) => {
+    return { posts };
+}
+
+export default connect(mapStateToProps, { fetchData })(App);
